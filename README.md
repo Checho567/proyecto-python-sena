@@ -1,2 +1,2 @@
 # proyecto-python-sena
-Nimodo
+Proyecto de escritorio para sistema del Sena
