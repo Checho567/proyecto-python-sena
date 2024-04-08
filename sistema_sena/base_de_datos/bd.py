@@ -41,13 +41,13 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS aprendiz (
                     ficha INTEGER(8) NOT NULL,
                     jornada VARCHAR(15) NOT NULL,
                     id_programa INTEGER,
-                    id_nota INTEGER,
+                    id_resultado_aprendizaje INTEGER,
                     id_instructor INTEGER,
                     id_actividad INTEGER,
                     FOREIGN KEY (id_programa) REFERENCES programa(id_programa),
-                    FOREIGN KEY (id_nota) REFERENCES nota(id_nota),
                     FOREIGN KEY (id_instructor) REFERENCES instructor(id_instructor),
-                    FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad)
+                    FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad),
+                    FOREIGN KEY (id_resultado_aprendizaje) REFERENCES resultado_aprendizaje(id_resultado_aprendizaje)
                 )''')
 
 # Crear tabla competencia
@@ -69,9 +69,11 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS actividad (
                     id_tipo_actividad INTEGER,
                     id_nota INTEGER,
                     id_instructor INTEGER,
+                    id_aprendiz INTEGER,
                     FOREIGN KEY (id_nota) REFERENCES nota(id_nota),
                     FOREIGN KEY (id_tipo_actividad) REFERENCES tipo_actividad(id_tipo_actividad),
-                    FOREIGN KEY (id_instructor) REFERENCES instructor(id_instructor)
+                    FOREIGN KEY (id_instructor) REFERENCES instructor(id_instructor),
+                    FOREIGN KEY (id_aprendiz) REFERENCES aprendiz(id_aprendiz)
                 )''')
 
 datos_resultado_aprendizaje = [

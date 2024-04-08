@@ -1,5 +1,4 @@
 import tkinter as tk
-from crud_notas import CRUDNota
 from crud_competencia import CRUDCompetencia
 from crud_actividad import CRUDActividad
 from crud_aprendiz import CRUDAprendiz
@@ -39,8 +38,8 @@ class Inicio(tk.Tk):
         
         self.boton_ir_actividad = tk.Button(
             self, 
-            text='Ver panel de actividades.', 
-            font=('Arial', 13), 
+            text='Ver panel de actividades.',
+            font=('Arial', 13),
             width=21, 
             bg='green',
             fg="white",
@@ -51,17 +50,20 @@ class Inicio(tk.Tk):
     def ir_crud_aprendiz(self):
         crud_aprendiz = CRUDAprendiz(self)
         crud_aprendiz.mainloop()
+        # self.destroy()
     
     def ir_crud_programa(self):
         crud_programa = CRUDCompetencia(self)
         crud_programa.mainloop()
+        # self.destroy()
         
     def ir_crud_actividad(self):
         crud_actividad = CRUDActividad(self)
         crud_actividad.mainloop()
+        # self.destroy()
     
-    def cerrar_ventana(self):
-        self.destroy()
+    # def cerrar_ventana(self):
+    #     self.destroy()
 
 inicio = Inicio()
 inicio.mainloop()

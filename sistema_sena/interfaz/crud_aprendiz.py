@@ -49,15 +49,6 @@ class CRUDAprendiz(tk.Toplevel):
         )
         self.lbl_programa.grid(row=1, column=3, pady=10)
         
-        self.lbl_nota = tk.Label(
-            self, 
-            text='Nota', 
-            font=('Arial', 15, 'bold'), 
-            bg='green',
-            fg='white'
-        )
-        self.lbl_nota.grid(row=1, column=4, pady=10, padx=80)
-        
         self.lbl_instructor = tk.Label(
             self, 
             text='Instructor', 
@@ -65,7 +56,7 @@ class CRUDAprendiz(tk.Toplevel):
             bg='green',
             fg='white'
         )
-        self.lbl_instructor.grid(row=1, column=5, pady=10)
+        self.lbl_instructor.grid(row=1, column=4, pady=10)
         
         self.lbl_actividad = tk.Label(
             self, 
@@ -74,7 +65,16 @@ class CRUDAprendiz(tk.Toplevel):
             bg='green',
             fg='white'
         )
-        self.lbl_actividad.grid(row=1, column=6, pady=10, padx=80)
+        self.lbl_actividad.grid(row=1, column=5, pady=10, padx=80)
+        
+        self.lbl_resultado_aprendizaje = tk.Label(
+            self, 
+            text='Resultado de \naprendizaje', 
+            font=('Arial', 15, 'bold'), 
+            bg='green',
+            fg='white'
+        )
+        self.lbl_resultado_aprendizaje.grid(row=1, column=6, pady=10, padx=80)
         # Fin de labels para los inputs
         
         # Inicio inputs para los campos
@@ -90,14 +90,14 @@ class CRUDAprendiz(tk.Toplevel):
         self.lista_programa = tk.Listbox(self, font=('Arial', 12), selectmode=tk.SINGLE, height=5)
         self.lista_programa.grid(row=2, column=3, pady=5)
         
-        self.lista_nota = tk.Listbox(self, font=('Arial', 12), selectmode=tk.SINGLE, height=5, width=8)
-        self.lista_nota.grid(row=2, column=4, pady=5)
-        
         self.lista_instructor = tk.Listbox(self, font=('Arial', 12), selectmode=tk.SINGLE, height=5)
-        self.lista_instructor.grid(row=2, column=5, pady=5)
+        self.lista_instructor.grid(row=2, column=4, pady=5, padx=80)
         
         self.lista_actividad = tk.Listbox(self, font=('Arial', 12), selectmode=tk.SINGLE, height=5)
-        self.lista_actividad.grid(row=2, column=6, pady=5)
+        self.lista_actividad.grid(row=2, column=5, pady=5)
+        
+        self.lista_resultado = tk.Listbox(self, font=('Arial', 12), selectmode=tk.SINGLE, height=5)
+        self.lista_resultado.grid(row=2, column=6, pady=5)
         # Fin inputs para los campos
         
         #Inicio botones para acciones
@@ -171,21 +171,13 @@ class CRUDAprendiz(tk.Toplevel):
         )
         self.mostrar_programa.grid(row=4, column=3, pady=10)
         
-        self.mostrar_nota = tk.Label(
-            self, 
-            text='Nota', 
-            font=('Arial', 15, 'bold'),
-            fg='black'
-        )
-        self.mostrar_nota.grid(row=4, column=4, pady=10)
-        
         self.mostrar_instructor = tk.Label(
             self, 
             text='Instructor', 
             font=('Arial', 15, 'bold'),
             fg='black'
         )
-        self.mostrar_instructor.grid(row=4, column=5, pady=10)
+        self.mostrar_instructor.grid(row=4, column=4, pady=10)
         
         self.mostrar_actividad = tk.Label(
             self, 
@@ -193,7 +185,15 @@ class CRUDAprendiz(tk.Toplevel):
             font=('Arial', 15, 'bold'),
             fg='black'
         )
-        self.mostrar_actividad.grid(row=4, column=6, pady=10)
+        self.mostrar_actividad.grid(row=4, column=5, pady=10)
+        
+        self.mostrar_resultado = tk.Label(
+            self, 
+            text='Resultado de \naprendizaje', 
+            font=('Arial', 15, 'bold'),
+            fg='black'
+        )
+        self.mostrar_resultado.grid(row=4, column=6, pady=10)
         # Fin labels tipo tabla para los registros
         
         # Recuperar los nombres de los programas
@@ -204,15 +204,6 @@ class CRUDAprendiz(tk.Toplevel):
         conexion.close()
         for programa in programas:
             self.lista_programa.insert(tk.END, programa[0])
-            
-        # Recuperar los numeros de las notas
-        conexion = sqlite3.connect('sistema_sena.db')
-        cursor = conexion.cursor()
-        cursor.execute("SELECT nota FROM nota")
-        notas = cursor.fetchall()
-        conexion.close()
-        for nota in notas:
-            self.lista_nota.insert(tk.END, nota[0])
             
         # Recuperar los nombres de los instructores
         conexion = sqlite3.connect('sistema_sena.db')
@@ -231,6 +222,15 @@ class CRUDAprendiz(tk.Toplevel):
         conexion.close()
         for actividad in actividades:
             self.lista_actividad.insert(tk.END, actividad[0])
+        
+        # Recuperar las descripciones de las actividades
+        conexion = sqlite3.connect('sistema_sena.db')
+        cursor = conexion.cursor()
+        cursor.execute("SELECT resultado_aprendizaje FROM resultado_aprendizaje")
+        resultados = cursor.fetchall()
+        conexion.close()
+        for resultado in resultados:
+            self.lista_resultado.insert(tk.END, resultado[0])
             
         # Mostrar los registros
         self.mostrar_registros()
@@ -256,14 +256,14 @@ class CRUDAprendiz(tk.Toplevel):
             self.mostrar_datos_programa = tk.Label(self, text=aprendiz[4], font=('Arial', 12))
             self.mostrar_datos_programa.grid(row=i+5, column=3, pady=10)
             
-            self.mostrar_datos_nota = tk.Label(self, text=aprendiz[5], font=('Arial', 12))
-            self.mostrar_datos_nota.grid(row=i+5, column=4, pady=10)
-            
             self.mostrar_datos_instructor = tk.Label(self, text=aprendiz[6], font=('Arial', 12))
-            self.mostrar_datos_instructor.grid(row=i+5, column=5, pady=10)
+            self.mostrar_datos_instructor.grid(row=i+5, column=4, pady=10)
             
             self.mostrar_datos_actividad = tk.Label(self, text=aprendiz[7], font=('Arial', 12))
-            self.mostrar_datos_actividad.grid(row=i+5, column=6, pady=10)
+            self.mostrar_datos_actividad.grid(row=i+5, column=5, pady=10)
+            
+            self.mostrar_resultado = tk.Label(self, text=aprendiz[5], font=('Arial', 12))
+            self.mostrar_resultado.grid(row=i+5, column=6, pady=10)
             
             self.btn_accion = tk.Button(self, 
             text='Seleccionar', 
@@ -287,9 +287,9 @@ class CRUDAprendiz(tk.Toplevel):
         self.txt_jornada.insert(0, aprendiz[3])
         
         self.lista_programa.insert(tk.END)
-        self.lista_nota.insert(tk.END)
         self.lista_instructor.insert(tk.END)
         self.lista_actividad.insert(tk.END)
+        self.lista_resultado.insert(tk.END)
         
         self.registro_seleccionado = aprendiz
     
@@ -300,10 +300,10 @@ class CRUDAprendiz(tk.Toplevel):
             nv_ficha = self.txt_ficha.get()
             nv_jornada = self.txt_jornada.get()
             nv_programa = self.lista_programa.get(tk.ACTIVE)
-            nv_nota = self.lista_nota.get(tk.ACTIVE)
             nv_instructor = self.lista_instructor.get(tk.ACTIVE)
             nv_actividad = self.lista_actividad.get(tk.ACTIVE)
-            if nv_nombre_aprendiz and nv_ficha and nv_jornada and nv_programa and nv_nota and nv_instructor and nv_actividad:
+            nv_resultado = self.lista_resultado.get(tk.ACTIVE)
+            if nv_nombre_aprendiz and nv_ficha and nv_jornada and nv_programa and nv_instructor and nv_resultado:
                 conexion = sqlite3.connect('sistema_sena.db')
                 cursor = conexion.cursor()
                 cursor.execute('''INSERT INTO aprendiz (
@@ -311,16 +311,16 @@ class CRUDAprendiz(tk.Toplevel):
                     ficha, 
                     jornada,
                     id_programa,
-                    id_nota,
                     id_instructor,
-                    id_actividad) VALUES (?, ?, ?, ?, ?, ?, ?)''',(
+                    id_actividad,
+                    id_resultado_aprendizaje) VALUES (?, ?, ?, ?, ?, ?, ?)''',(
                         nv_nombre_aprendiz, 
                         nv_ficha,
                         nv_jornada, 
-                        nv_programa, 
-                        nv_nota, 
+                        nv_programa,
                         nv_instructor,
-                        nv_actividad
+                        nv_actividad,
+                        nv_resultado
                         )
                     )
                 conexion.commit()
@@ -358,10 +358,10 @@ class CRUDAprendiz(tk.Toplevel):
                 edit_ficha = self.txt_ficha.get()
                 edit_jornada = self.txt_jornada.get()
                 edit_programa = self.lista_programa.get(tk.ACTIVE)
-                edit_nota = self.lista_nota.get(tk.ACTIVE)
                 edit_instructor = self.lista_instructor.get(tk.ACTIVE)
                 edit_actividad = self.lista_actividad.get(tk.ACTIVE)
-                if edit_nombre_aprendiz and edit_ficha and edit_jornada and edit_programa and edit_nota and edit_instructor and edit_actividad:
+                edit_resultado = self.lista_resultado.get(tk.ACTIVE)
+                if edit_nombre_aprendiz and edit_ficha and edit_jornada and edit_programa and edit_instructor and edit_resultado:
                     conexion = sqlite3.connect('sistema_sena.db')
                     cursor = conexion.cursor()
                     cursor.execute('''UPDATE aprendiz SET
@@ -369,17 +369,17 @@ class CRUDAprendiz(tk.Toplevel):
                                     ficha = ?,
                                     jornada = ?,
                                     id_programa = ?,
-                                    id_nota = ?,
                                     id_instructor = ?,
-                                    id_actividad = ?
+                                    id_actividad = ?,
+                                    id_resultado_aprendizaje = ?
                                     WHERE id_aprendiz = ?''', (
                                     edit_nombre_aprendiz, 
                                     edit_ficha,
                                     edit_jornada,
                                     edit_programa,
-                                    edit_nota,
                                     edit_instructor,
                                     edit_actividad,
+                                    edit_resultado,
                                     aprendiz[0]
                                     ))
                     conexion.commit()
