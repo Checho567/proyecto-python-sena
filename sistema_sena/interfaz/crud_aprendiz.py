@@ -394,5 +394,5 @@ class CRUDAprendiz(tk.Toplevel):
         except sqlite3.Error as e:
             messagebox.showerror("Error", f"Ocurrió un error: {e}")
 
-# aprendiz = CRUDAprendiz()
-# aprendiz.mainloop()
+aprendiz = CRUDAprendiz()
+aprendiz.mainloop()

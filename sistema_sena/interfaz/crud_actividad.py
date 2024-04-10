@@ -68,15 +68,6 @@ class CRUDActividad(tk.Toplevel):
             fg='white'
         )
         self.lbl_instructor.grid(row=1, column=5, pady=10)
-        
-        self.lbl_nota = tk.Label(
-            self, 
-            text='Nota', 
-            font=('Arial', 15, 'bold'), 
-            bg='green',
-            fg='white'
-        )
-        self.lbl_nota.grid(row=1, column=6, pady=10)
         # Fin labels para los campos
         
         #Inicio inputs de los campos
@@ -102,9 +93,6 @@ class CRUDActividad(tk.Toplevel):
         
         self.lista_instructor = tk.Listbox(self, font=('Arial', 12), selectmode=tk.SINGLE, height=5)
         self.lista_instructor.grid(row=2, column=5, pady=5)
-        
-        self.lista_nota = tk.Listbox(self, font=('Arial', 12), selectmode=tk.SINGLE, height=5, width=5)
-        self.lista_nota.grid(row=2, column=6, pady=5)
         #Fin inputs de los campos
         
         #Inicio botones para acciones
@@ -193,14 +181,6 @@ class CRUDActividad(tk.Toplevel):
             fg='black'
         )
         self.mostrar_instructor.grid(row=4, column=5, pady=10)
-        
-        self.mostrar_nota = tk.Label(
-            self, 
-            text='Nota', 
-            font=('Arial', 15, 'bold'),
-            fg='black'
-        )
-        self.mostrar_nota.grid(row=4, column=6, pady=10)
         # Fin labels para mostrar los campos
         
         # Recuperar los nombres de los tipos de actividad
@@ -230,14 +210,6 @@ class CRUDActividad(tk.Toplevel):
         for aprendiz in aprendices:
             self.lista_aprendiz.insert(tk.END, aprendiz[0])
             
-        # Recuperar notas
-        conexion = sqlite3.connect('sistema_sena.db')
-        cursor = conexion.cursor()
-        cursor.execute("SELECT nota FROM nota")
-        notas = cursor.fetchall()
-        conexion.close()
-        for nota in notas:
-            self.lista_nota.insert(tk.END, nota[0])
         
         self.mostrar_registros()
     
@@ -391,5 +363,5 @@ class CRUDActividad(tk.Toplevel):
         except sqlite3.Error as e:
             messagebox.showerror("Error", f"Ocurrió un error: {e}")
 
-# crud_actividad = CRUDActividad()
-# crud_actividad.mainloop()
+crud_actividad = CRUDActividad()
+crud_actividad.mainloop()

@@ -19,7 +19,12 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS resultado_aprendizaje (
 # Crear tabla nota
 cursor.execute('''CREATE TABLE IF NOT EXISTS nota (
                     id_nota INTEGER PRIMARY KEY AUTOINCREMENT,
-                    nota INTEGER(100) NOT NULL
+                    nota_1 INTEGER(100) NOT NULL,
+                    nota_2 INTEGER(100) NOT NULL,
+                    nota_3 INTEGER(100) NOT NULL,
+                    resultado INTEGER (100) NULL,
+                    id_aprendiz INTEGER(10),
+                    FOREIGN KEY (id_aprendiz) REFERENCES aprendiz(id_aprendiz)
                 )''')
 
 # Crear tabla instructor
@@ -101,20 +106,6 @@ instructor = [
     ('Amparo Rueda',)
 ]
 cursor.executemany("INSERT INTO instructor (nombre_instructor) VALUES (?)", instructor)
-
-notas = [
-    [10,],
-    [20,],
-    [30,],
-    [40,],
-    [50,],
-    [60,],
-    [70,],
-    [80,],
-    [90,],
-    [100,]
-]
-cursor.executemany("INSERT INTO nota (nota) VALUES (?)", notas)
 
 # Confirmar los cambios y cerrar la conexión
 conexion.commit()
